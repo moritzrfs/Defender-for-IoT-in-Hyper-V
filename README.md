@@ -21,6 +21,7 @@ $VHDPath= "C:\local\Defender for IoT\sensor_disk.vhdx"
 $ISOPath= "C:\local\Defender for IoT\image.iso"
 $DiskSize= 40GB
 $MemorySize= 4GB
+$CoreCount= 4
 
 $ManagementPort = "Ethernet"
 $vSwitchManagementName = "vSwitch_Management"
@@ -39,6 +40,9 @@ New-VHD -Path $VHDPath -SizeBytes $DiskSize -Fixed
 ## 2. Creation of the VM including application of all required configurations
 ```powershell
 New-VM -Name $VMName -MemoryStartupBytes $MemorySize -Generation 2 -VHDPath $VHDPath
+
+# Set cores
+Set-VMProcessor -VMName $VMName -Count $CoreCount
 
 # Disable Dynamic Memory
 Set-VMMemory -VMName $VMName -DynamicMemoryEnabled $false
